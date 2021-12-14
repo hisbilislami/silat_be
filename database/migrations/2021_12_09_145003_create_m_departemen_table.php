@@ -17,6 +17,8 @@ class CreateMDepartemenTable extends Migration
             $table->id()->autoIncrement();
             $table->string('code', 5);
             $table->string('name', 100);
+            $table->string('letter_code', 100);
+            $table->string('letter_type', 100);
             $table->string('icon', 255);
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by');
