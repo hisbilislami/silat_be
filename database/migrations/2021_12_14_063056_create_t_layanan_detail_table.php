@@ -13,17 +13,19 @@ class CreateTLayananDetailTable extends Migration
      */
     public function up()
     {
-        Schema::create('t_layanan_detail', function (Blueprint $table) {
+        Schema::create('t_service_detail', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->unsignedBigInteger('t_layananId');
-            $table->unsignedBigInteger('m_userId');
-            $table->string('tahap', 100);
+            $table->unsignedBigInteger('t_service_id');
+            $table->unsignedBigInteger('user_id');
+            $table->integer('stage')->nullable();
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by');
             $table->softDeletes();
             $table->timestamps();
-            $table->foreign(['created_by'], 'created_by_ld')->references(['id'])->on('m_user');
-            $table->foreign(['updated_by'], 'updated_by_ld')->references(['id'])->on('m_user');
+            $table->foreign(['created_by'], 'created_by_ld')->references(['id'])->on('users');
+            $table->foreign(['updated_by'], 'updated_by_ld')->references(['id'])->on('users');
+            $table->foreign(['t_service_id'], 't_service_id_ld')->references(['id'])->on('t_service');
+            $table->foreign(['user_id'], 'user_id_ld')->references(['id'])->on('users');
         });
     }
 
@@ -34,10 +36,13 @@ class CreateTLayananDetailTable extends Migration
      */
     public function down()
     {
-        Schema::table('t_layanan_detail', function (Blueprint $table) {
+        Schema::table('t_service_detail', function (Blueprint $table) {
             $table->dropForeign('created_by_ld');
             $table->dropForeign('updated_by_ld');
+
+            $table->dropForeign('t_service_id_ld');
+            $table->dropForeign('user_id_ld');
         });
-        Schema::dropIfExists('t_layanan_detail');
+        Schema::dropIfExists('t_service_detail');
     }
 }

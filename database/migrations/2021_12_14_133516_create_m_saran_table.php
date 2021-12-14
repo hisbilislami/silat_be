@@ -13,15 +13,15 @@ class CreateMSaranTable extends Migration
      */
     public function up()
     {
-        Schema::create('m_saran', function (Blueprint $table) {
+        Schema::create('t_suggestion', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->string('name', 100);
-            $table->unsignedBigInteger('created_by');
+            $table->string('suggest', 100);
+            $table->unsignedBigInteger('m_departement_id');
             $table->unsignedBigInteger('updated_by');
             $table->softDeletes();
             $table->timestamps();
-            $table->foreign(['created_by'], 'created_by_sa')->references(['id'])->on('m_user');
-            $table->foreign(['updated_by'], 'updated_by_sa')->references(['id'])->on('m_user');
+            $table->foreign(['updated_by'], 'updated_by_sa')->references(['id'])->on('users');
+            $table->foreign(['m_departement_id'], 'm_departement_id_sa')->references(['id'])->on('m_departement');
         });
     }
 
@@ -32,10 +32,10 @@ class CreateMSaranTable extends Migration
      */
     public function down()
     {
-        Schema::table('m_saran', function (Blueprint $table) {
-            $table->dropForeign('created_by_sa');
+        Schema::table('t_suggestion', function (Blueprint $table) {
             $table->dropForeign('updated_by_sa');
+            $table->dropForeign('m_departement_id_sa');
         });
-        Schema::dropIfExists('m_saran');
+        Schema::dropIfExists('t_suggestion');
     }
 }

@@ -13,15 +13,15 @@ class CreateInformasiTable extends Migration
      */
     public function up()
     {
-        Schema::create('informasi', function (Blueprint $table) {
+        Schema::create('information', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->text('content');
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by');
             $table->softDeletes();
             $table->timestamps();
-            $table->foreign(['created_by'], 'created_by_i')->references(['id'])->on('m_user');
-            $table->foreign(['updated_by'], 'updated_by_i')->references(['id'])->on('m_user');
+            $table->foreign(['created_by'], 'created_by_i')->references(['id'])->on('users');
+            $table->foreign(['updated_by'], 'updated_by_i')->references(['id'])->on('users');
         });
     }
 
@@ -32,10 +32,10 @@ class CreateInformasiTable extends Migration
      */
     public function down()
     {
-        Schema::table('informasi', function (Blueprint $table) {
+        Schema::table('information', function (Blueprint $table) {
             $table->dropForeign('created_by_i');
             $table->dropForeign('updated_by_i');
         });
-        Schema::dropIfExists('informasi');
+        Schema::dropIfExists('information');
     }
 }

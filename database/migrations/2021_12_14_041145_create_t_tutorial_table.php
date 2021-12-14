@@ -15,6 +15,7 @@ class CreateTTutorialTable extends Migration
     {
         Schema::create('t_tutorial', function (Blueprint $table) {
             $table->id()->autoIncrement();
+            $table->string('code', 5);
             $table->string('name', 100);
             $table->enum('type',['video','text']);
             $table->text('files');
@@ -22,8 +23,8 @@ class CreateTTutorialTable extends Migration
             $table->unsignedBigInteger('updated_by');
             $table->softDeletes();
             $table->timestamps();
-            $table->foreign(['created_by'], 'created_by_tt')->references(['id'])->on('m_user');
-            $table->foreign(['updated_by'], 'updated_by_tt')->references(['id'])->on('m_user');
+            $table->foreign(['created_by'], 'created_by_tt')->references(['id'])->on('users');
+            $table->foreign(['updated_by'], 'updated_by_tt')->references(['id'])->on('users');
         });
     }
 
@@ -35,8 +36,8 @@ class CreateTTutorialTable extends Migration
     public function down()
     {
         Schema::table('t_tutorial', function (Blueprint $table) {
-            $table->dropForeign('created_by_tp');
-            $table->dropForeign('updated_by_tp');
+            $table->dropForeign('created_by_tt');
+            $table->dropForeign('updated_by_tt');
         });
         Schema::dropIfExists('t_tutorial');
     }

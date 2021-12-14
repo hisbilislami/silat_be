@@ -13,13 +13,16 @@ class CreateMPemohonTable extends Migration
      */
     public function up()
     {
-        Schema::create('m_pemohon', function (Blueprint $table) {
+        Schema::create('m_applicant', function (Blueprint $table) {
             $table->id()->autoIncrement();
             $table->string('nik', 20);
             $table->string('name', 100);
-            $table->string('no_telepon', 15);
+            $table->string('no_telepon', 15)->nullable();
+            $table->unsignedBigInteger('updated_by');
             $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign(['updated_by'], 'updated_by_ma')->references(['id'])->on('users');
         });
     }
 
@@ -30,6 +33,6 @@ class CreateMPemohonTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('m_pemohon');
+        Schema::dropIfExists('m_applicant');
     }
 }
