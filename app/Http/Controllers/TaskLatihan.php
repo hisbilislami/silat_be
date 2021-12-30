@@ -6,5 +6,8 @@ use Illuminate\Http\Request;
 
 class TaskLatihan extends Controller
 {
-    //
+    public function taskCoba()
+    {
+        echo 'sukses';
+    }
 }
