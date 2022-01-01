@@ -44,14 +44,40 @@ class AuthController extends Controller
 
             $token = $user->createToken('auth_token')->plainTextToken;
 
-            return response()->json(['data' => $user, 'access_token' => $token, 'token_type' => 'Bearer', 'status_code' => Response::HTTP_OK], Response::HTTP_OK);
+            return response()->json(
+                [
+                    'data' => $user,
+                    'access_token' => $token,
+                    'token_type' => 'Bearer',
+                    'status_code' => Response::HTTP_OK
+                ],
+                Response::HTTP_OK
+            );
 
         } catch (\Illuminate\Validation\ValidationException $e) {
-            return response()->json(['error' => $e->errors(), 'status_code' => Response::HTTP_BAD_REQUEST], Response::HTTP_BAD_REQUEST);
+            return response()->json(
+                [
+                    'error' => $e->errors(),
+                    'status_code' => Response::HTTP_BAD_REQUEST
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
 		} catch (\Illuminate\Database\QueryException $e) {
-            return response()->json(['error' => $e->errorInfo, 'status_code' => Response::HTTP_BAD_REQUEST], Response::HTTP_BAD_REQUEST);
+            return response()->json(
+                [
+                    'error' => $e->errorInfo,
+                    'status_code' => Response::HTTP_BAD_REQUEST
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
         } catch (Exception $e) {
-            return response()->json(['error' => $e, 'status_code' => Response::HTTP_BAD_REQUEST], Response::HTTP_BAD_REQUEST);
+            return response()->json(
+                [
+                    'error' => $e,
+                    'status_code' => Response::HTTP_BAD_REQUEST
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
         }
     }
 
@@ -71,7 +97,13 @@ class AuthController extends Controller
             if (!Auth::attempt($request->only('username', 'password')))
             {
                 return response()
-                    ->json(['message' => 'Invalid login details', 'status_code' => Response::HTTP_UNAUTHORIZED], Response::HTTP_UNAUTHORIZED);
+                    ->json(
+                        [
+                            'message' => 'Invalid login details',
+                            'status_code' => Response::HTTP_UNAUTHORIZED
+                        ],
+                        Response::HTTP_UNAUTHORIZED
+                    );
             }
 
             $user = User::where('username', $request['username'])->firstOrFail();
@@ -86,9 +118,21 @@ class AuthController extends Controller
                 ]
             );
         } catch (\Illuminate\Validation\ValidationException $e) {
-            return response()->json(['message' => $e->errors(), 'status_code' => Response::HTTP_BAD_REQUEST], Response::HTTP_BAD_REQUEST);
+            return response()->json(
+                [
+                    'message' => $e->errors(),
+                    'status_code' => Response::HTTP_BAD_REQUEST
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
         } catch (Exception $e) {
-            return response()->json(['error' => $e, 'status_code' => Response::HTTP_BAD_REQUEST], Response::HTTP_BAD_REQUEST);
+            return response()->json(
+                [
+                    'error' => $e,
+                    'status_code' => Response::HTTP_BAD_REQUEST
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
         }
     }
 
@@ -107,7 +151,13 @@ class AuthController extends Controller
                 ]
             );
         } catch (Exception $e) {
-            return response()->json(['error' => $e, 'status_code' => Response::HTTP_BAD_REQUEST], Response::HTTP_BAD_REQUEST);
+            return response()->json(
+                [
+                    'error' => $e,
+                    'status_code' => Response::HTTP_BAD_REQUEST
+                ],
+                Response::HTTP_BAD_REQUEST
+            );
         }
     }
 }
