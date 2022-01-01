@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\ApiInformation;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +18,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+// Route::resource('information', ApiInformation::class);
+Route::get("ShowInformation", [ApiInformation::class, 'index']);
+Route::post("SaveInformation", [ApiInformation::class, 'save']);
+Route::get("GetInformation/{id}", [ApiInformation::class, 'getInformasi']);
+Route::put("UpdateInformation/{id}", [ApiInformation::class, 'update']);
+Route::delete("DeleteInformation/{id}", [ApiInformation::class, 'delete']);
