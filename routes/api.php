@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\DepartmentController;
 use App\Http\Controllers\API\InformationController;
+use App\Http\Controllers\API\SuggestionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +39,13 @@ Route::group(['middleware' => ['auth:sanctum']], function (): void {
         Route::post('/insert', [InformationController::class, 'insert']);
         Route::put('/update', [InformationController::class, 'update']);
         Route::delete('/delete', [InformationController::class, 'destroy']);
+    });
+
+    Route::group(['prefix' => 'suggestion'], function () {
+        Route::get('/get', [SuggestionController::class, 'index']);
+        Route::post('/insert', [SuggestionController::class, 'insert']);
+        Route::put('/update', [SuggestionController::class, 'update']);
+        Route::delete('/delete', [SuggestionController::class, 'destroy']);
     });
 
     // API route for logout user
