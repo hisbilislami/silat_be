@@ -6,6 +6,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\DepartmentController;
 use App\Http\Controllers\API\InformationController;
 use App\Http\Controllers\API\SuggestionController;
+use App\Http\Controllers\API\EventsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +47,13 @@ Route::group(['middleware' => ['auth:sanctum']], function (): void {
         Route::post('/insert', [SuggestionController::class, 'insert']);
         Route::put('/update', [SuggestionController::class, 'update']);
         Route::delete('/delete', [SuggestionController::class, 'destroy']);
+    });
+
+    Route::group(['prefix' => 'events'], function () {
+        Route::get('/get', [EventsController::class, 'index']);
+        Route::post('/insert', [EventsController::class, 'insert']);
+        Route::put('/update', [EventsController::class, 'update']);
+        Route::delete('/delete', [EventsController::class, 'destroy']);
     });
 
     // API route for logout user
