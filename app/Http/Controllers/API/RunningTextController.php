@@ -5,16 +5,16 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
-use App\Models\Suggestion;
+use App\Models\RunningText;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Validation\ValidationException;
 
-class SuggestionController extends Controller
+class RunningTextController extends Controller
 {
     protected $model;
     public function __construct()
     {
-        $this->model = new Suggestion();
+        $this->model = new RunningText();
     }
 
     public function index(Request $request)
@@ -59,13 +59,15 @@ class SuggestionController extends Controller
             // Validate request
             $request->validate(
                 [
-                    '*.suggest' => 'required|string',
-                    '*.m_departement_id' => 'required',
+                    '*.name' => 'required|string',
                 ]
             );
 
+            $userId = Auth::user()->id;
+
             $data = [];
             foreach ($request->all() as $value) {
+                $value['created_by'] = $userId;
                 array_push($data, $value);
             }
 
@@ -106,9 +108,8 @@ class SuggestionController extends Controller
             // Validate request
             $request->validate(
                 [
-                    '*.id' => 'required|integer|exists:t_suggestion,id',
-                    '*.suggest' => 'required|string',
-                    '*.m_departement_id' => 'required',
+                    '*.id' => 'required|integer|exists:t_running_text,id',
+                    '*.name' => 'required|string',
                 ]
             );
 
@@ -154,7 +155,7 @@ class SuggestionController extends Controller
             // Validate request
             $request->validate(
                 [
-                    '*.id' => 'required|integer|exists:t_suggestion,id',
+                    '*.id' => 'required|integer|exists:t_running_text,id',
                 ]
             );
 

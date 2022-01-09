@@ -5,16 +5,16 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
-use App\Models\Suggestion;
+use App\Models\Regulation;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Validation\ValidationException;
 
-class SuggestionController extends Controller
+class RegulationController extends Controller
 {
     protected $model;
     public function __construct()
     {
-        $this->model = new Suggestion();
+        $this->model = new Regulation();
     }
 
     public function index(Request $request)
@@ -59,13 +59,17 @@ class SuggestionController extends Controller
             // Validate request
             $request->validate(
                 [
-                    '*.suggest' => 'required|string',
-                    '*.m_departement_id' => 'required',
+                    '*.code' => 'required|string|max:5|unique:t_regulation',
+                    '*.name' => 'required|string|max:100',
+                    '*.files' => 'nullable|string',
                 ]
             );
 
+            $userId = Auth::user()->id;
+
             $data = [];
             foreach ($request->all() as $value) {
+                $value['created_by'] = $userId;
                 array_push($data, $value);
             }
 
@@ -106,9 +110,10 @@ class SuggestionController extends Controller
             // Validate request
             $request->validate(
                 [
-                    '*.id' => 'required|integer|exists:t_suggestion,id',
-                    '*.suggest' => 'required|string',
-                    '*.m_departement_id' => 'required',
+                    '*.id' => 'required|integer|exists:t_regulation,id',
+                    '*.code' => 'required|string|max:5|unique:t_regulation',
+                    '*.name' => 'required|string|max:100',
+                    '*.files' => 'nullable|string',
                 ]
             );
 
@@ -154,7 +159,7 @@ class SuggestionController extends Controller
             // Validate request
             $request->validate(
                 [
-                    '*.id' => 'required|integer|exists:t_suggestion,id',
+                    '*.id' => 'required|integer|exists:t_regulation,id',
                 ]
             );
 

@@ -8,16 +8,16 @@ use Illuminate\Support\Facades\DB;
 
 /**
  * @property integer $id
- * @property integer $m_departement_id
+ * @property integer $created_by
  * @property integer $updated_by
- * @property string $suggest
+ * @property string $name
  * @property string $deleted_at
  * @property string $created_at
  * @property string $updated_at
  * @property User $user
- * @property MDepartement $mDepartement
+ * @property User $user
  */
-class Suggestion extends Model
+class RunningText extends Model
 {
     use SoftDeletes;
     /**
@@ -25,7 +25,7 @@ class Suggestion extends Model
      * 
      * @var string
      */
-    protected $table = 't_suggestion';
+    protected $table = 't_running_text';
 
     /**
      * The "type" of the auto-incrementing ID.
@@ -37,7 +37,7 @@ class Suggestion extends Model
     /**
      * @var array
      */
-    protected $fillable = ['m_departement_id', 'updated_by', 'suggest', 'deleted_at', 'created_at', 'updated_at'];
+    protected $fillable = ['created_by', 'updated_by', 'name', 'deleted_at', 'created_at', 'updated_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -47,19 +47,12 @@ class Suggestion extends Model
         return $this->belongsTo('App\Models\User', 'created_by');
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function mDepartement()
-    {
-        return $this->belongsTo('App\Models\MDepartement');
-    }
-
     public function get($limit, $page, $query)
     {
-        $result = $this::join('m_departement', 't_suggestion.m_departement_id', '=', 'm_departement.id')
-            ->where(DB::raw('lower(suggest)'), 'like', '%' . $query . '%')
-            ->orWhere(DB::raw('lower(name)'), 'like', '%' . $query . '%');
+        $result = $this::where(function ($q) use ($query) {
+            $q->where(DB::raw('lower(name)'), 'like', '%' . $query . '%')
+                ->get();
+        });
         return $result->paginate($limit, '*', 'page', $page);
     }
 
