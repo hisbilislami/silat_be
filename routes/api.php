@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\DepartmentController;
+use App\Http\Controllers\API\ApplicantController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +32,13 @@ Route::group(['middleware' => ['auth:sanctum']], function ():void {
         Route::post('/insert', [DepartmentController::class, 'insert']);
         Route::put('/update', [DepartmentController::class, 'update']);
         Route::delete('/delete', [DepartmentController::class, 'destroy']);
+    });
+
+    Route::group(['prefix' => 'applicant'], function () {
+        Route::get('/get', [ApplicantController::class, 'index']);
+        Route::post('/insert', [ApplicantController::class, 'insert']);
+        Route::put('/update', [ApplicantController::class, 'update']);
+        Route::delete('/delete', [ApplicantController::class, 'destroy']);
     });
 
     // API route for logout user
