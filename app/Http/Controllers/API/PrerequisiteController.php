@@ -5,17 +5,16 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
-use App\Models\Department;
+use App\Models\Prerequisite;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Validation\ValidationException;
 
-class DepartmentController extends Controller
+class PrerequisiteController extends Controller
 {
-
     protected $model;
     public function __construct()
     {
-        $this->model = new Department();
+        $this->model = new Prerequisite();
     }
 
     public function index(Request $request)
@@ -60,10 +59,8 @@ class DepartmentController extends Controller
             // Validate request
             $request->validate(
                 [
-                    '*.code' => 'required|string|max:5|unique:m_departement',
+                    '*.code' => 'required|string|max:5|unique:m_prerequisite',
                     '*.name' => 'required|string|max:100',
-                    '*.letter_code' => 'required|string|max:100',
-                    '*.icon' => 'nullable|string',
                 ]
             );
 
@@ -112,11 +109,9 @@ class DepartmentController extends Controller
             // Validate request
             $request->validate(
                 [
-                    '*.id' => 'required|integer|exists:m_departement,id',
+                    '*.id' => 'required|integer|exists:m_prerequisite,id',
                     '*.code' => 'required|string|max:5',
                     '*.name' => 'required|string|max:100',
-                    '*.letter_code' => 'required|string|max:100',
-                    '*.icon' => 'nullable|string',
                 ]
             );
 
@@ -162,7 +157,7 @@ class DepartmentController extends Controller
             // Validate request
             $request->validate(
                 [
-                    '*.id' => 'required|integer|exists:m_departement,id',
+                    '*.id' => 'required|integer|exists:m_prerequisite,id',
                 ]
             );
 

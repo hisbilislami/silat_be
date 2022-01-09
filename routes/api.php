@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\DepartmentController;
+use App\Http\Controllers\API\PrerequisiteController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +32,13 @@ Route::group(['middleware' => ['auth:sanctum']], function ():void {
         Route::post('/insert', [DepartmentController::class, 'insert']);
         Route::put('/update', [DepartmentController::class, 'update']);
         Route::delete('/delete', [DepartmentController::class, 'destroy']);
+    });
+
+    Route::group(['prefix' => 'prerequisite'], function () {
+        Route::get('/get', [PrerequisiteController::class, 'index']);
+        Route::post('/insert', [PrerequisiteController::class, 'insert']);
+        Route::put('/update', [PrerequisiteController::class, 'update']);
+        Route::delete('/delete', [PrerequisiteController::class, 'destroy']);
     });
 
     // API route for logout user
