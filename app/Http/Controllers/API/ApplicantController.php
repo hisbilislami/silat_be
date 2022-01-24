@@ -5,17 +5,16 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
-use App\Models\Department;
+use App\Models\Applicant;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Validation\ValidationException;
 
-class DepartmentController extends Controller
+class ApplicantController extends Controller
 {
-
     protected $model;
     public function __construct()
     {
-        $this->model = new Department();
+        $this->model = new Applicant();
     }
 
     public function index(Request $request)
@@ -60,18 +59,14 @@ class DepartmentController extends Controller
             // Validate request
             $request->validate(
                 [
-                    '*.code' => 'required|string|max:5|unique:m_departement',
+                    '*.nik' => 'required|string|max:16|unique:m_applicant',
                     '*.name' => 'required|string|max:100',
-                    '*.letter_code' => 'required|string|max:100',
-                    '*.icon' => 'nullable|string',
+                    '*.no_telepon' => 'required|string|max:13',
                 ]
             );
 
-            $userId = Auth::user()->id;
-
             $data = [];
             foreach ($request->all() as $value) {
-                $value['created_by'] = $userId;
                 array_push($data, $value);
             }
 
@@ -112,11 +107,10 @@ class DepartmentController extends Controller
             // Validate request
             $request->validate(
                 [
-                    '*.id' => 'required|integer|exists:m_departement,id',
-                    '*.code' => 'required|string|max:5',
+                    '*.id' => 'required|integer|exists:m_applicant,id',
+                    '*.nik' => 'required|string|max:16|unique:m_applicant',
                     '*.name' => 'required|string|max:100',
-                    '*.letter_code' => 'required|string|max:100',
-                    '*.icon' => 'nullable|string',
+                    '*.no_telepon' => 'string|string|max:13',
                 ]
             );
 
@@ -162,7 +156,7 @@ class DepartmentController extends Controller
             // Validate request
             $request->validate(
                 [
-                    '*.id' => 'required|integer|exists:m_departement,id',
+                    '*.id' => 'required|integer|exists:m_applicant,id',
                 ]
             );
 
