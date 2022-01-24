@@ -4,13 +4,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\DepartmentController;
+use App\Http\Controllers\API\MasterServiceController;
 use App\Http\Controllers\API\InformationController;
 use App\Http\Controllers\API\SuggestionController;
 use App\Http\Controllers\API\EventsController;
 use App\Http\Controllers\API\TutorialController;
 use App\Http\Controllers\API\RegulationController;
 use App\Http\Controllers\API\RunningTextController;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +39,13 @@ Route::group(['middleware' => ['auth:sanctum']], function (): void {
         Route::delete('/delete', [DepartmentController::class, 'destroy']);
     });
 
+    Route::group(['prefix' => 'master-service'], function () {
+        Route::get('/get', [MasterServiceController::class, 'index']);
+        Route::post('/insert', [MasterServiceController::class, 'insert']);
+        Route::put('/update', [MasterServiceController::class, 'update']);
+        Route::delete('/delete', [MasterServiceController::class, 'destroy']);
+    });
+  
     Route::group(['prefix' => 'information'], function () {
         Route::get('/get', [InformationController::class, 'index']);
         Route::post('/insert', [InformationController::class, 'insert']);
