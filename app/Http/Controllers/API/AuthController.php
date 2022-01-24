@@ -53,7 +53,6 @@ class AuthController extends Controller
                 ],
                 Response::HTTP_OK
             );
-
         } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json(
                 [
@@ -62,7 +61,7 @@ class AuthController extends Controller
                 ],
                 Response::HTTP_BAD_REQUEST
             );
-		} catch (\Illuminate\Database\QueryException $e) {
+        } catch (\Illuminate\Database\QueryException $e) {
             return response()->json(
                 [
                     'error' => $e->errorInfo,
@@ -94,8 +93,7 @@ class AuthController extends Controller
                 'password' => 'required'
             ]);
 
-            if (!Auth::attempt($request->only('username', 'password')))
-            {
+            if (!Auth::attempt($request->only('username', 'password'))) {
                 return response()
                     ->json(
                         [
