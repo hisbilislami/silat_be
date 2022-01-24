@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\DepartmentController;
 use App\Http\Controllers\API\MasterOccupationController;
+use App\Http\Controllers\API\ApplicantController;
+
 use App\Http\Controllers\API\MasterServiceController;
 use App\Http\Controllers\API\InformationController;
 use App\Http\Controllers\API\SuggestionController;
@@ -47,6 +49,13 @@ Route::group(['middleware' => ['auth:sanctum']], function (): void {
         Route::delete('/delete', [MasterOccupationController::class, 'destroy']);
     });
 
+    Route::group(['prefix' => 'applicant'], function () {
+        Route::get('/get', [ApplicantController::class, 'index']);
+        Route::post('/insert', [ApplicantController::class, 'insert']);
+        Route::put('/update', [ApplicantController::class, 'update']);
+        Route::delete('/delete', [ApplicantController::class, 'destroy']);
+    });
+  
     Route::group(['prefix' => 'master-service'], function () {
         Route::get('/get', [MasterServiceController::class, 'index']);
         Route::post('/insert', [MasterServiceController::class, 'insert']);
