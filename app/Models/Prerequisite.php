@@ -12,32 +12,27 @@ use Illuminate\Support\Facades\DB;
  * @property integer $updated_by
  * @property string $code
  * @property string $name
- * @property string $letter_code
- * @property string $letter_type
- * @property string $icon
  * @property string $deleted_at
  * @property string $created_at
  * @property string $updated_at
  * @property User $user
  * @property User $user
- * @property MDepartementService[] $mDepartementServices
- * @property MEmployeeOccupation[] $mEmployeeOccupations
- * @property TService[] $tServices
- * @property TSuggestion[] $tSuggestions
+ * @property MServicePrerequisite[] $mServicePrerequisites
+ * @property TServicePrerequisite[] $tServicePrerequisites
  */
-class Department extends Model
+class Prerequisite extends Model
 {
     use SoftDeletes;
     /**
      * The table associated with the model.
-     *
+     * 
      * @var string
      */
-    protected $table = 'm_departement';
+    protected $table = 'm_prerequisite';
 
     /**
      * The "type" of the auto-incrementing ID.
-     *
+     * 
      * @var string
      */
     protected $keyType = 'integer';
@@ -45,7 +40,7 @@ class Department extends Model
     /**
      * @var array
      */
-    protected $fillable = ['created_by', 'updated_by', 'code', 'name', 'letter_code', 'letter_type', 'icon', 'deleted_at', 'created_at', 'updated_at'];
+    protected $fillable = ['created_by', 'updated_by', 'code', 'name', 'deleted_at', 'created_at', 'updated_at'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -58,33 +53,17 @@ class Department extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function mDepartementServices()
+    public function mServicePrerequisites()
     {
-        return $this->hasMany('App\Models\MDepartementService');
+        return $this->hasMany('App\Models\MServicePrerequisite');
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function mEmployeeOccupations()
+    public function tServicePrerequisites()
     {
-        return $this->hasMany('App\Models\MEmployeeOccupation');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function tServices()
-    {
-        return $this->hasMany('App\Models\TService');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function tSuggestions()
-    {
-        return $this->hasMany('App\Models\TSuggestion');
+        return $this->hasMany('App\Models\TServicePrerequisite');
     }
 
     public function get($limit, $page, $query)
