@@ -28,6 +28,7 @@ use Illuminate\Support\Facades\DB;
 class Department extends Model
 {
     use SoftDeletes;
+    public $timestamps = true;
     /**
      * The table associated with the model.
      *
@@ -99,7 +100,7 @@ class Department extends Model
 
     public function insert($data)
     {
-        return DB::table($this->table)->insert($data);
+        return $this->insert($data);
     }
 
     public function updateData($data)
